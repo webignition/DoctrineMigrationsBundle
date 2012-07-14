@@ -38,5 +38,20 @@ abstract class DoctrineCommand extends BaseCommand
         $configuration->registerMigrationsFromDirectory($dir);
         $configuration->setName($container->getParameter('doctrine_migrations.name'));
         $configuration->setMigrationsTableName($container->getParameter('doctrine_migrations.table_name'));
+        self::injectContainerToMigrations($container, $configuration->getMigrations());
+    }
+
+    /**
+     * Injects the container to migrations aware of it
+     */
+    private static function injectContainerToMigrations(ContainerInterface $container, array $versions)
+    {
+        foreach ($versions as $version) {
+            $migration = $version->getMigration();            
+            
+            if ($migration instanceof ContainerAwareInterface) {                
+                $migration->setContainer($container);
+            }
+        }
     }
 }
