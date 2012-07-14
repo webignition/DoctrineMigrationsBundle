@@ -27,5 +27,6 @@
     "autoload": {
         "psr-0": { "Doctrine\\Bundle\\MigrationsBundle": "" }
     },
+    "minimum-stability": "dev",
     "target-dir": "Doctrine/Bundle/MigrationsBundle"
 }
